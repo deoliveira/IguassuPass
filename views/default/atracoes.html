@@ -1,0 +1,16 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,True}}
+{{extend 'layout.html'}}
+
+	<table class="table table-striped">
+		{{for multimedia in multimedias:}}
+
+		<tr>
+			<td>{{=T(multimedia.atracao.nome)}} <br/> {{multimedia.atracao.desc}}</td>
+			<td><img src="{{=T(multimedia.src)}}"/></td>
+			<td><button class="btn btn-large btn-primary">Compre Agora!</button></td>
+		</tr>
+		<tr>
+			<td>{{=A('add atracao', _href=URL('atracao_create'))}}</td>
+		</tr>
+		{{pass}}
+	</table>

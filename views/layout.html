@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]><html class="ie ie6 ie-lte9 ie-lte8 ie-lte7 no-js" lang="{{=T.accepted_language or 'en'}}"> <![endif]-->
+<!--[if IE 7]><html class="ie ie7 ie-lte9 ie-lte8 ie-lte7 no-js" lang="{{=T.accepted_language or 'en'}}"> <![endif]-->
+<!--[if IE 8]><html class="ie ie8 ie-lte9 ie-lte8 no-js" lang="{{=T.accepted_language or 'en'}}"> <![endif]-->
+<!--[if IE 9]><html class="ie9 ie-lte9 no-js" lang="{{=T.accepted_language or 'en'}}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{=T.accepted_language or 'en'}}"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8" />
+  <!-- www.phpied.com/conditional-comments-block-downloads/ -->
+  <!-- Always force latest IE rendering engine
+       (even in intranet) & Chrome Frame
+       Remove this if you use the .htaccess -->
+  <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge{{=not request.is_local and ',chrome=1' or ''}}">
+  <![endif]-->
+  
+  <title>{{=response.title or request.application}}</title>
+  
+  <!-- http://dev.w3.org/html5/markup/meta.name.html -->
+  <meta name="application-name" content="{{=request.application}}" />
+  
+  <!-- Speaking of Google, don't forget to set your site up:
+       http://google.com/webmasters -->
+  <meta name="google-site-verification" content="" />
+
+  <!--  Mobile Viewport Fix
+      j.mp/mobileviewport & davidbcalhoun.com/2010/viewport-metatag
+      device-width: Occupy full width of the screen in its current orientation
+      initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
+      user-scalable = yes allows the user to zoom in -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  
+  <!-- Place favicon.ico and apple-touch-icon.png in the root of your domain and delete these references -->
+  <link rel="shortcut icon" href="{{=URL('static','favicon.ico')}}" type="image/x-icon">
+  <link rel="apple-touch-icon" href="{{=URL('static','favicon.png')}}">
+
+  <!-- All JavaScript at the bottom, except for Modernizr which enables 
+       HTML5 elements & feature detects -->
+  <script src="{{=URL('static','js/modernizr.custom.js')}}"></script>  
+
+  <!-- include stylesheets -->
+  {{
+  response.files.append(URL('static', 'assets/css/bootstrap.css'))
+  response.files.append(URL('static', 'assets/css/bootstrap-responsive.css'));
+  response.files.append(URL('static', 'assets/css/docs.css'))
+  response.files.append(URL('static', 'assets/js/google-code-prettify/prettify.css'))
+  if response.menu:
+     response.files.append(URL('static','css/superfish.css'))
+     response.files.append(URL('static','js/superfish.js'))
+  pass
+  }}
+
+  {{include 'web2py_ajax.html'}}
+
+  {{if response.menu:}}
+  <script type="text/javascript">
+    jQuery(function(){ jQuery('ul.sf-menu').supersubs({minWidth:12,maxWidth:30,extraWidth:3}).superfish(); });
+  </script>
+  {{pass}}
+
+  {{
+  # using sidebars need to know what sidebar you want to use
+  left_sidebar_enabled = globals().get('left_sidebar_enabled',False)
+  right_sidebar_enabled = globals().get('right_sidebar_enabled',False)
+  middle_columns = {0:'sixteen',1:'twelve',2:'eight'}[
+     (left_sidebar_enabled and 1 or 0)+(right_sidebar_enabled and 1 or 0)]
+  }}
+
+  <!-- uncomment here to load jquery-ui
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+  uncomment to load jquery-ui //-->
+
+<!--Aqui começam as importações dos links, etc dos csss bootstrap-->
+
+ 
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+
+
+
+</head>
+<body>
+  <!--Aqui é onde é chamada a FBSDK para que seja possível a inserção de comentários usando o FB-->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+  <!--Fim da chamada do FB-->
+  <div class="pull-right">
+    <img src="/iguassupass/static/images/logo_1.png"/>
+  </div>
+  <nav>
+    <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+          <ul class="nav">
+            <li><a href="/iguassupass">Home</a></li>
+            <li><a href="{{=URL('getstarted')}}">{{=T("Get Started")}}</a></li>
+            <li><a href="{{=URL('customersfeedback')}}">{{=T("Customers Feedback")}}</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  {{=T("Sights")}}
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="{{=URL('atracoes')}}">{{=T("All the Sights")}}</a></li>
+                  <li><a href="/iguassupass">{{=T("Most Visited")}}</a></li>
+                </ul>
+            </li>
+          </ul>
+          <div class="nav-collapse">
+            <ul class="nav pull-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  Login
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  {{='auth' in globals() and auth.navbar(separators=('','',''))}}
+                </ul>
+              </li>
+              </ul>
+            <!--fim lista links do nav-->
+          </div>
+        <!-- /.nav-collapse -->
+      </div>
+    </div>
+    <!-- /navbar-inner -->
+  <!-- /navbar -->
+               
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse">
+            <!-- .nav, .navbar-search, .navbar-form, etc -->
+            </div>
+  </div>
+
+  </nav>
+    <div class="container">
+    <div class ="hero-unit">
+          {{block center}}
+          {{include}}
+          {{end}}
+    </div><!-- main -->
+  </div><!-- wrapper -->
+
+  <footer class="footer">
+    <div class="container">
+        <p class="pull-right"><a href="#">Topo</a></p>
+        
+        <p>Copyright IguassuPass 2012 <a href="#" target="_blank">.</a></p>
+    </div>    
+</footer>  <!-- footer -->
+  
+  <!--[if lt IE 7 ]>
+    <script src="{{=URL('static','js/dd_belatedpng.js')}}"></script>
+    <script> DD_belatedPNG.fix('img, .png_bg'); //fix any <img> or .png_bg background-images </script>
+    <![endif]-->
+  {{if response.google_analytics_id:}}<script type="text/javascript"> var _gaq = _gaq || []; _gaq.push(['_setAccount', '{{=response.google_analytics_id}}']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })(); </script> {{pass}}
+<!-- aqui vão os scripts do bootstrap-->
+  <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script src="/iguassupass/static/assets/js/jquery.js"></script>
+    <script src="/iguassupass/static/assets/js/google-code-prettify/prettify.js"></script>
+    <script src="/iguassupass/static/assets/js/bootstrap-transition.js"></script>
+    <script src="/iguassupass/static/assets/js/bootstrap-alert.js"></script>
+    <script src="/iguassupass/static/assets/js/bootstrap-modal.js"></script>
+    <script src="/iguassupass/static/assets/js/bootstrap-dropdown.js"></script>
+    <script src="/iguassupass/static/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="/iguassupass/static/assets/js/bootstrap-tab.js"></script>
+    <script src="/iguassupass/static/assets/js/bootstrap-tooltip.js"></script>
+    <script src="/iguassupass/static/assets/js/bootstrap-popover.js"></script>
+    <script src="/iguassupass/static/assets/js/bootstrap-button.js"></script>
+    <script src="/iguassupass/static/assets/js/bootstrap-collapse.js"></script>
+    <script src="/iguassupass/static/assets/js/bootstrap-carousel.js"></script>
+    <script src="/iguassupass/static/assets/js/bootstrap-typeahead.js"></script>
+    <script src="/iguassupass/static/assets/js/application.js"></script>
+    <script src="//connect.facebook.net/en_US/all.js"></script>
+
+</body>
+</html>
